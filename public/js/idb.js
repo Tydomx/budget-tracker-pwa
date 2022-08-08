@@ -30,3 +30,15 @@ request.onerror = function (event) {
 	console.log(event.target.errorCode);
 };
 
+// this function will be executed if we attempt to submit new data and there's no internet connection
+// will be used in api.js file's form submission function if fetch() function's catch() method is executed
+function saveRecord(record) {
+	// open new transaction with db with read and write permissions
+	const transaction = db.transaction(['new_budget'], 'readwrite');
+
+	// access the object store from 'new_budget'
+	const transactionObjectStore = transaction.objectStore('new_budget');
+
+	// add record to your store with add method
+	transactionObjectStore.add(record);
+};
