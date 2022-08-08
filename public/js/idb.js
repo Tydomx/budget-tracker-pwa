@@ -42,3 +42,50 @@ function saveRecord(record) {
 	// add record to your store with add method
 	transactionObjectStore.add(record);
 };
+
+function uploadTransaction() {
+	// open transaction on db
+	const transaction = db.transaction(['new_budget'], 'readwrite');
+
+	// access object store
+	const transactionObjectStore = transaction.objectStore('new_budget');
+
+	// get all records from store and set to a variable
+	const getAll = transactionObjectStore.getAll();
+
+	// upon a successful .getAll() execution, run this function
+	getAll.onsuccess = function () {
+		// if there was data in indexedDb's store, let's send it to the api server
+		if (getAll.result.length > 0) {
+			fetch('/api/transaction', {
+				method: 'POST',
+				body: JSON.stringify(getAll.result),
+				headers: {
+					Accept: 'application/json, text/plain, */*',
+					'Content-Type': 'application/json'
+				}
+			})
+				.then(response => response.json())
+				.then(serverResponse => {
+					if (serverResponse.message) {
+						throw new Error(serverResponse);
+					}
+					// open one more transaction
+					const transaction = db.transaction(['new_budget'], 'readwrite');
+					// access the new_budget object store
+					const transactionObjectStore = transaction.objectStore('new_budget');
+					// clear all items in your store
+					transactionObjectStore.clear();
+
+					alert('All saved transactions has been submitted into the system!');
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		}
+	}
+};
+
+// listen for app coming back online
+// listen for internet connection using online event, if online execute uploadTransaction()
+window.addEventListener('online', uploadTransaction);
