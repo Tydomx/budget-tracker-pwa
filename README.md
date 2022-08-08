@@ -51,11 +51,17 @@ The user does not need to be connected to the internet to use the app. Upon firs
 ## Deployment
 [GitHub](https://github.com/Tydomx/budget-tracker-pwa)
 
-[Heroku]()
+[Heroku](https://pwa-budget-trackerz.herokuapp.com/)
 
 
 ## Screenshot(s) 📷
+![image](https://user-images.githubusercontent.com/99767019/183331537-3ef6724f-4931-40d8-887b-e5e9d97254db.png)
 
+Install icon
+![image](https://user-images.githubusercontent.com/99767019/183331574-0cc6b697-8b8f-4037-9766-5f8057344137.png)
+
+App installed on desktop
+![image](https://user-images.githubusercontent.com/99767019/183331685-be19c13e-3874-47cb-9a98-0a66f859023a.png)
 
 ---
 
